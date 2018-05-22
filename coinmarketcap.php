@@ -32,14 +32,48 @@
     <!-- js -->
     <script>
         $(document).ready(function(){
+            
+            var store = new Array();
             var countPage = 0;
             loadCoin("https://api.coinmarketcap.com/v2/ticker/?start=0&limit=10");
             
+            if (typeof(Storage) !== undefined ){
+                if (localStorage.getItem("stores"))
+                    store = localStorage.getItem("stores").split(",");
+                    // alert("hello");
+                    // alert(typeof store);
+            }
+            else {
+                alert("Storage undefined");
+            }
+            
+            $(document).on("click", "button", function(){
+                if ($(this).text() == "Add") {
+                    $(this).html("Added");
+                    $(this).removeClass("btn-info");
+                    $(this).addClass("btn-danger");
+                    console.log($(this).attr("id"));
 
-            $("#btnShow").click(function(){
-                loadCoin();
+                    store.push($(this).attr("id"));
+                    localStorage.setItem("stores", store);
+                    console.log(store);
+                    return;
+                }
+                // else {
+                //     $(this).html("Add");
+                //     $(this).removeClass("btn-danger");
+                //     $(this).addClass("btn-info");
+                //     return;
+                // }
+                
+                
             });
             
+            $("#btn-clear").click(function(){
+                localStorage.clear();
+                location.reload();
+            });
+
             $("#btn-next").click(function(){
                 countPage += 10;
                 if (countPage > 100) countPage = 100;
@@ -64,24 +98,28 @@
                     var txt = "";
                     var count = countPage;
                     for (i in data["data"]) {
-                            console.log(i);
-                            var obj = data["data"][i];
-                            var obj_USD = data["data"][i]["quotes"]["USD"];
-                            
-                            count += 1;
-                            txt += "<tr>";
-                            txt += "<td>" + count + "</td>";
-                            txt += "<td>" + obj["name"] + "</td>";
-                            txt += "<td>" + obj_USD["market_cap"] + "</td>";
-                            txt += "<td>" + obj_USD["price"] + "</td>";
-                            txt += "<td>" + obj_USD["volume_24h"] + "</td>";
-                            txt += "<td>" + obj["circulating_supply"] + "</td>";
-                            txt += "<td>" + obj_USD["percent_change_24h"] + "</td>";
-                            txt += "<td><button class='btn btn-block' id=" + obj["id"] + "></button></td>"
+                        // console.log(i);
+                        var obj = data["data"][i];
+                        var obj_USD = data["data"][i]["quotes"]["USD"];
+                        count += 1;
+                        txt += "<tr>";
+                        txt += "<td>" + count + "</td>";
+                        txt += "<td>" + obj["name"] + "</td>";
+                        txt += "<td>" + obj_USD["market_cap"] + "</td>";
+                        txt += "<td>" + obj_USD["price"] + "</td>";
+                        txt += "<td>" + obj_USD["volume_24h"] + "</td>";
+                        txt += "<td>" + obj["circulating_supply"] + "</td>";
+                        txt += "<td>" + obj_USD["percent_change_24h"] + "</td>";
+                        
+                        if ($.inArray(obj["id"].toString(), store) == -1)
+                            txt += "<td><button class='btn btn-block btn-info' id=" + obj["id"] + ">" + "Add" + "</button></td>";
+                        else 
+                            txt += "<td><button class='btn btn-block btn-danger' id=" + obj["id"] + ">" + "Added" + "</button></td>";
+
                         txt += "</tr>";
                     }   
                 
-                    console.log(txt);
+                    // console.log(txt);
                     $("#tbody-coin").html(txt);
                 });
             }
@@ -90,7 +128,7 @@
 </head>
 
 <body class="container-fluid">
-    <h4>CoinMarketCap</h4>
+    <h3 class="text-center text-success">CoinMarketCap</h4>
     <!-- <button class="btn btn-block btn-primary" id="btnShow">Show Top Coin</button> -->
     <div class="row">
         <div class="col-md-1">
@@ -99,6 +137,10 @@
         <div class="col-md-1">
             <button class="btn btn-block btn-primary" id="btn-next">Next</button>
         </div> 
+
+        <div class="col-md-2">
+            <button class="btn btn-block btn-primary" id="btn-clear">Clear Local Storage</button>
+        </div>
     </div>
 
    
