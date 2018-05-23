@@ -53,7 +53,7 @@
                 alert("Storage undefined");
             }
             
-            $(document).on("click", "button", function(){
+            $(document).on("click", "#tbody-coin button", function(){
                 if ($(this).text() == "Add") {
                     $(this).html("Added");
                     $(this).removeClass("btn-info");
@@ -68,12 +68,18 @@
 
                     return;
                 }
-                // else {
-                //     $(this).html("Add");
-                //     $(this).removeClass("btn-danger");
-                //     $(this).addClass("btn-info");
-                //     return;
-                // }
+                else {
+                    $(this).html("Add");
+                    $(this).removeClass("btn-danger");
+                    $(this).addClass("btn-info");
+                    
+                    var id = $(this).attr("id");
+                    store.pop(id);
+                    localStorage.setItem("stores", store);
+                    $("#tr" + id).remove();
+                    count_store -= 1;
+                    return;
+                }
                 
                 
             });
@@ -103,8 +109,8 @@
                 var obj = window.listCoin["data"][i];
                 var obj_USD = window.listCoin["data"][i]["quotes"]["USD"];
                 count_store += 1;
-                txt += "<tr>";
-                txt += "<td>" + count_store + "</td>";
+                txt += "<tr id='tr" + i + "'>";
+                // txt += "<td>" + count_store + "</td>";
                 txt += "<td>" + obj["name"] + "</td>";
                 txt += "<td>" + obj_USD["market_cap"] + "</td>";
                 txt += "<td>" + obj_USD["price"] + "</td>";
@@ -204,7 +210,6 @@
         <div class="col-md-offset-1 col-md-4">
             <table id="table-coin-2">
                 <tr>
-                    <th>#</th>
                     <th>Name</th>
                     <th>Market Cap</th>
                     <th>Price</th>
@@ -214,15 +219,7 @@
                 </tr>
 
                 <tbody id="tbody-coin-2">
-                    <!-- <tr>
-                        <td>Hello00000000</td>
-                        <td>Hello00000000</td>
-                        <td>Hello00000000</td>
-                        <td>Hello00000000</td>
-                        <td>Hello00000000</td>
-                        <td>Hello00000000</td>
-                        <td>Hello00000000</td>
-                    </tr> -->
+
                 </tbody>
                 
                 
