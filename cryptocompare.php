@@ -32,6 +32,17 @@
             background-color: blanchedalmond;
             color: red;
         }
+
+        .loading-bar {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("img/loading.gif");
+        }
     </style>
 
     <!-- js -->
@@ -140,15 +151,22 @@
             }
 
             function loadCoin(url){
-                
-                $.get(url,function(data, status) {
-                    var count = countPage;
+                $.get(url,async function(data, status) {
 
+                    $("#tbody-coin").empty();
+                    var count = countPage;
                     for (i in data["data"]) {
                         // console.log(i);
                         var obj = data["data"][i];
                         var obj_USD = data["data"][i]["quotes"]["USD"];
-                        var url = "https://min-api.cryptocompare.com/data/histoday?fsym=" + obj["symbol"] +"&tsym=USD&limit=60&aggregate=3&e=CCCAGG";
+                        var url = "https://min-api.cryptocompare.com/data/histoday?fsym=" + obj["symbol"] +"&tsym=USD&limit=3&aggregate=3&e=CCCAGG";
+                        
+                        await $.get(url, function(data2, status) {
+                                    _data2 = data2;
+                                    console.log("hello1");
+                                });
+
+                        console.log("hello2");
 
                         count += 1;
                         var txt = "";
@@ -165,35 +183,36 @@
                             txt += "<td><button class='btn btn-block btn-info' id=" + obj["id"] + ">" + "Add" + "</button></td>";
                         else 
                             txt += "<td><button class='btn btn-block btn-danger' id=" + obj["id"] + ">" + "Added" + "</button></td>";
-
                         txt += "</tr>";
+
+                        txt += "<tr class='tr_his'><th></th><th>Time</th><th>high</th><th>low</th><th>open</th><th>volumefrom</th><th>volumeto</th><th>close</th></tr>";
+                        // console.log(status);
+                        for (j in window._data2["Data"]) {
+                            _obj = window._data2["Data"][j];
+                            // console.log(_obj);
+                            txt += "<tr>";
+                            txt += "<td></td>";
+                            txt += "<td>" + _obj["time"] + "</td>";
+                            txt += "<td>" + _obj["high"] + "</td>";
+                            txt += "<td>" + _obj["low"] + "</td>";
+                            txt += "<td>" + _obj["open"] + "</td>";
+                            txt += "<td>" + _obj["volumefrom"] + "</td>";
+                            txt += "<td>" + _obj["volumeto"] + "</td>";
+                            txt += "<td>" + _obj["close"] + "</td>";
+                            txt += "</tr>";
+                        }
+
                         $("#tbody-coin").append(txt);
-                        console.log("hello1");
-
-                        // get historyday
-                        $.get(url, function(data2, status) {
-                            var txt = "<tr class='tr_his'><th></th><th>Time</th><th>high</th><th>low</th><th>open</th><th>volumefrom</th><th>volumeto</th><th>close</th></tr>";
-
-                            for (i in data2["Data"]) {
-                                _obj = data2["Data"][i];
-                                // console.log(_obj);
-                                txt += "<tr>";
-                                txt += "<td></td>";
-                                txt += "<td>" + _obj["time"] + "</td>";
-                                txt += "<td>" + _obj["high"] + "</td>";
-                                txt += "<td>" + _obj["low"] + "</td>";
-                                txt += "<td>" + _obj["open"] + "</td>";
-                                txt += "<td>" + _obj["volumefrom"] + "</td>";
-                                txt += "<td>" + _obj["volumeto"] + "</td>";
-                                txt += "<td>" + _obj["close"] + "</td>";
-                                txt += "</tr>";
-                            }
-                            $("#tbody-coin").append(txt);
-                            console.log("hello2");
-                        });
                     }   
                 });
             }
+
+            // function loadHis(url) {
+            //     $.get(url, function(data2, status) {
+            //         _data2 = data2;
+            //         console.log("hello1");
+            //     });
+            // }
         });
     </script>
 </head>
