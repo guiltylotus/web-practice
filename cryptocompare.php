@@ -35,13 +35,15 @@
 
         .loading-bar {
             display: none;
-            position: fixed;
-            z-index: 1000;
+            position: absolute;
             left: 0;
             top: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("img/loading.gif");
+            /* width: 100%;
+            height: 100%; */
+            background-image: url("img/Preloader_10.gif");
+            background-position: 50% 50%;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
         }
     </style>
 
@@ -53,7 +55,7 @@
             var countPage = 0;
             var count_store = 0;
 
-            loadCoin("https://api.coinmarketcap.com/v2/ticker/?start=0&limit=5");
+            loadCoin("https://api.coinmarketcap.com/v2/ticker/?start=0&limit=1", 5);
             $.get("https://api.coinmarketcap.com/v2/ticker/", function(data, status){
                 listCoin = data;
                 loadStore();
@@ -108,16 +110,18 @@
             $("#btn-next").click(function(){
                 countPage += 5;
                 if (countPage > 100) countPage = 100;
-                var url = "https://api.coinmarketcap.com/v2/ticker/?start=" + countPage + "&limit=5"
-                loadCoin(url);
+                var url = "https://api.coinmarketcap.com/v2/ticker/?start=" + countPage + "&limit=1";
+                $("#tbody-coin").empty();
+                loadCoin(url,5);
             });
             
             $("#btn-pre").click(function(){
                 countPage -= 5;
                 if (countPage < 0) countPage = 0;
 
-                var url = "https://api.coinmarketcap.com/v2/ticker/?start=" + countPage + "&limit=5"
-                loadCoin(url);
+                var url = "https://api.coinmarketcap.com/v2/ticker/?start=" + countPage + "&limit=1";
+                $("#tbody-coin").empty();
+                loadCoin(url,5);
             });
 
             function addRow_txt(i) { 
@@ -149,26 +153,24 @@
                     // console.log(txt);
                     $("#tbody-coin-2").html(txt);
             }
+            
+            function loadCoin(url, stt) {
+                if (stt == 0) {
+                    $("body").removeClass("loading-bar");
+                    return;
+                }
+                
+                if (stt ==5) 
+                    $("body").addClass("loading-bar");
 
-            function loadCoin(url){
-                $.get(url,async function(data, status) {
+                console.log("hello1");   
 
-                    $("#tbody-coin").empty();
-                    var count = countPage;
-                    for (i in data["data"]) {
-                        // console.log(i);
+                $.get(url, function(data){
+                    // console.log(url);
+                    for(i in data["data"]) {
                         var obj = data["data"][i];
                         var obj_USD = data["data"][i]["quotes"]["USD"];
-                        var url = "https://min-api.cryptocompare.com/data/histoday?fsym=" + obj["symbol"] +"&tsym=USD&limit=3&aggregate=3&e=CCCAGG";
-                        
-                        await $.get(url, function(data2, status) {
-                                    _data2 = data2;
-                                    console.log("hello1");
-                                });
-
-                        console.log("hello2");
-
-                        count += 1;
+                        count = countPage + 6 - stt;
                         var txt = "";
                         txt += "<tr>";
                         txt += "<td>" + count + "</td>";
@@ -182,37 +184,43 @@
                         if ($.inArray(obj["id"].toString(), store) == -1)
                             txt += "<td><button class='btn btn-block btn-info' id=" + obj["id"] + ">" + "Add" + "</button></td>";
                         else 
-                            txt += "<td><button class='btn btn-block btn-danger' id=" + obj["id"] + ">" + "Added" + "</button></td>";
+                            txt += "<td><button clsass='btn btn-block btn-danger' id=" + obj["id"] + ">" + "Added" + "</button></td>";
                         txt += "</tr>";
-
-                        txt += "<tr class='tr_his'><th></th><th>Time</th><th>high</th><th>low</th><th>open</th><th>volumefrom</th><th>volumeto</th><th>close</th></tr>";
-                        // console.log(status);
-                        for (j in window._data2["Data"]) {
-                            _obj = window._data2["Data"][j];
-                            // console.log(_obj);
-                            txt += "<tr>";
-                            txt += "<td></td>";
-                            txt += "<td>" + _obj["time"] + "</td>";
-                            txt += "<td>" + _obj["high"] + "</td>";
-                            txt += "<td>" + _obj["low"] + "</td>";
-                            txt += "<td>" + _obj["open"] + "</td>";
-                            txt += "<td>" + _obj["volumefrom"] + "</td>";
-                            txt += "<td>" + _obj["volumeto"] + "</td>";
-                            txt += "<td>" + _obj["close"] + "</td>";
-                            txt += "</tr>";
-                        }
-
-                        $("#tbody-coin").append(txt);
-                    }   
-                });
+                        // $("#tbody-coin").append(txt);
+                        
+                        // load history
+                        new Promise(function(resolve, reject){
+                            $.get( "https://min-api.cryptocompare.com/data/histoday?fsym=" + obj["symbol"] +"&tsym=USD&limit=3&aggregate=3&e=CCCAGG", function(data){
+                                resolve(data);
+                            });
+                        })
+                        .then((data) => {
+                            console.log("hello2");
+                            txt += "<tr class='tr_his'><th></th><th>Time</th><th>high</th><th>low</th><th>open</th><th>volumefrom</th><th>volumeto</th><th>close</th></tr>";
+                            // console.log(status);
+                            for (j in data["Data"]) {
+                                _obj = data["Data"][j];
+                                // console.log(_obj);
+                                txt += "<tr>";
+                                txt += "<td></td>";
+                                txt += "<td>" + _obj["time"] + "</td>";
+                                txt += "<td>" + _obj["high"] + "</td>";
+                                txt += "<td>" + _obj["low"] + "</td>";
+                                txt += "<td>" + _obj["open"] + "</td>";
+                                txt += "<td>" + _obj["volumefrom"] + "</td>";
+                                txt += "<td>" + _obj["volumeto"] + "</td>";
+                                txt += "<td>" + _obj["close"] + "</td>";
+                                txt += "</tr>";
+                            }
+                            $("#tbody-coin").append(txt);
+                            loadCoin("https://api.coinmarketcap.com/v2/ticker/?start=" + (count+1) + "&limit=1", stt-1);
+                        })
+                        // .then(
+                            
+                        // )
+                    }
+                });              
             }
-
-            // function loadHis(url) {
-            //     $.get(url, function(data2, status) {
-            //         _data2 = data2;
-            //         console.log("hello1");
-            //     });
-            // }
         });
     </script>
 </head>
