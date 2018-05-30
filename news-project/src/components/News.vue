@@ -21,7 +21,7 @@
             </div>
         </div>    
         <div class="col-md-4">
-            <div class="box2"> {{news_name}}</div>
+            <div class="box2" v-for="new in news_name"> {{news_name}}</div>
             <div class="box2"></div>
             <div class="box2"></div>
             <div class="box2"></div>
@@ -32,18 +32,20 @@
 </template>
 
 <script>
+    import data_news from '../assets/news_name.json';
     export default {
         name: 'news',
         data() {
             return {
-                news_name: [],
+                news_name: data_news.news,
             }
         },
 
         created() {
-            this.$http.get('../assets/news_name.txt').then(function(response) {
-                console.log(response);
-            });
+            // this.$http.get('../assets/news_name.txt').then(function(response) {
+            //     console.log(response);
+            // });
+            console.log(data_news);
         }
     }
 </script>
