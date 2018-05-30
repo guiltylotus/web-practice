@@ -21,9 +21,9 @@
             </div>
         </div>    
         <div class="col-md-4">
-            <div class="box2" v-for="new in news_name"> {{news_name}}</div>
-            <div class="box2"></div>
-            <div class="box2"></div>
+            <!-- <div class="box2" v-for"new in newsName"> {{new}}</div>             -->
+            <div class="box2">{{getNewsName()}}</div>
+            <div class="box2" v-for="news in newsName">{{news}}</div>
             <div class="box2"></div>
             <div class="box2"></div>
         </div>
@@ -37,7 +37,7 @@
         name: 'news',
         data() {
             return {
-                news_name: data_news.news,
+                newsName: data_news.news,
             }
         },
 
@@ -46,6 +46,17 @@
             //     console.log(response);
             // });
             console.log(data_news);
+        },
+
+        methods: {
+            getNewsName() {
+                var list = [];
+                for (let i in this.newsName) {
+                    list.push(i);
+                }
+                console.log(list);
+                return "hello";
+            }
         }
     }
 </script>
