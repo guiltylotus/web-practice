@@ -1,4 +1,4 @@
-# 1
+﻿# 1
 
 from https://coinmarketcap.com/ website get https://coinmarketcap.com/api
 
@@ -20,3 +20,6 @@ connect **coinmarketcap** and **cryptocompare** by Symbol
 
 **note** : hiểu về callback + promise + await/async: 
 https://toidicodedao.com/2016/07/05/javascript-promise/
+
+https://alligator.io/vuejs/rest-api-axios/
+https://github.com/pagekit/vue-resource/issues/579
