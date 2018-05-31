@@ -2,10 +2,16 @@
     <div class="row">
         <div class="col-md-8">
 
-            <div class="col-md-4 box1 " v-for="news in list_news">
-                <div class="avt"></div>
-                <a  v-bind:href="news.url">{{news.title}}</a> 
+            <div class="row" v-for="news in list_news">
+                <div class="col-md-3 box1 " >
+                    <div class="avt"></div> 
+                    <a  v-bind:href="news.url">{{news.title}}</a> 
+                </div>
+                <div class="col-md-5 box-content text-center">
+                    {{news.description}}
+                </div>
             </div>
+            
         
         </div>    
         <div class="col-md-4">           
@@ -73,8 +79,15 @@
     .box1 {
         /* width: 100%; */
         height: 250px;
-        margin: 20px;
+        margin: 20px 0px;
         border: 2px solid red;
+    }
+
+    .box-content {
+        height: 250px;
+        margin: 20px 1px;
+        border: 2px solid green;
+        border-left: 0px;
     }
 
     .avt {
