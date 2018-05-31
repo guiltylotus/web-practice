@@ -23,3 +23,6 @@ https://toidicodedao.com/2016/07/05/javascript-promise/
 
 https://alligator.io/vuejs/rest-api-axios/
 https://github.com/pagekit/vue-resource/issues/579
+
+# 3
+ 1. click 1 news -> open news
