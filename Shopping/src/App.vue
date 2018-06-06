@@ -3,8 +3,8 @@
     <!-- <img src="./assets/logo.png"> -->
     <!-- <router-view/> -->
     <shopping-nav/>
-    <shopping-add-new/>
-    <shopping-list/>
+    <shopping-add-new :items="items"/>
+    <shopping-list :items="items"/>
   </div>
 </template>
 
@@ -19,6 +19,16 @@ export default {
     'shopping-nav': ShoppingNav,
     'shopping-add-new': ShoppingAddNew,
     'shopping-list': ShoppingList,
+  },
+
+  data() {
+    return {
+      items: [
+                {name: 'Iphone', quantity: 2, price: 1000},
+                {name: 'Apple', quantity: 10, price: 50},
+                {name: 'Coca Cola', quantity: 5, price: 15},
+              ]
+    }
   }
 }
 </script>

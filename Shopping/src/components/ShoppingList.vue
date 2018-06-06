@@ -1,53 +1,19 @@
 <template>
     <div class="list-cover">
-        <div class='row list-border rounded'>
+        <div class='row list-border rounded' v-for="item in items">
             <div class="col-md-1  list-middle">O</div>
 
             <div class="col-md-2">
-                <h1>IphoneX</h1>
-                <p><i>Quantity:2</i></p>
+                <h3>{{item.name}}</h3>
+                <p><i>Quantity: {{item.quantity}}</i></p>
             </div>
 
             <div class="col-md-6 list-middle">
-                <h6>$1.000</h6>
+                <h6>${{item.price}} </h6>
             </div>
 
             <div class="col-md-3 list-middle">
-                <h6>$2.000</h6>
-            </div>
-        </div>
-
-        <div class='row list-border rounded'>
-            <div class="col-md-1  list-middle">O</div>
-
-            <div class="col-md-2">
-                <h1>IphoneX</h1>
-                <p><i>Quantity:2</i></p>
-            </div>
-
-            <div class="col-md-6 list-middle">
-                <h6>$1.000</h6>
-            </div>
-
-            <div class="col-md-3 list-middle">
-                <h6>$2.000</h6>
-            </div>
-        </div>
-
-        <div class='row list-border rounded'>
-            <div class="col-md-1  list-middle">O</div>
-
-            <div class="col-md-2">
-                <h1>IphoneX</h1>
-                <p><i>Quantity:2</i></p>
-            </div>
-
-            <div class="col-md-6 list-middle">
-                <h6>$1.000</h6>
-            </div>
-
-            <div class="col-md-3 list-middle">
-                <h6>$2.000</h6>
+                <h6>${{item.price * item.quantity}}</h6>
             </div>
         </div>
     </div>
@@ -55,7 +21,12 @@
 
 <script>
     export default {
-
+        props: ['items'],
+        data() {
+            return {
+                
+            }
+        }
     }
 </script>
 
