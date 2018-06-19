@@ -30,11 +30,12 @@ export default {
 
     methods: {
         checkLevel() {
-            this.username = this.login_username;
             if (this.login_username == 'admin') {
-                console.log("hello");
+                this.$router.push('/Admin');
             }
             else this.$router.push('/User');
+            
+            this.$emit('checkLevel', this.login_username);
         }
     }
 }

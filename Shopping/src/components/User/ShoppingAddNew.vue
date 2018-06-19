@@ -1,6 +1,13 @@
 <template>
     <div class="row add-border rounded">
         <div class="col-md-9 add-input">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Menu
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu text-center">
+                    <li v-for="item in menu">{{item.name}}</li>
+                </ul>
+            </div>
             <input type="text" placeholder="New item need to shop" v-model="nitem" >
 
             <div class="row">
@@ -16,7 +23,7 @@
             </div>
         </div>
 
-        <div class="col-md-3  add-btn">
+        <div class="col-md-3  add-btn ">
             <button class="btn btn-info" v-on:click="addItems">Add Item</button>
         </div>
     </div>
@@ -24,7 +31,7 @@
 
 <script>
     export default{
-        props: ['items'],
+        props: ['items', 'menu'],
         data() {
             return {
                 nitem: null,
@@ -44,6 +51,14 @@
 </script>
 
 <style scoped>
+    .dropdown-toggle {
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        width: 100%;
+    }
+
     .add-border {
         border: 2px solid gray;
         margin: 40px;
@@ -61,6 +76,12 @@
 
     .add-btn {
         margin: auto;
+    }
+
+    button {
+        display: block;
+        width: 100px;
+        margin: 20px auto;
     }
 
 </style>

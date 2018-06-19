@@ -2,9 +2,9 @@
   <div class="container-fluids" id="app">
     <!-- <img src="./assets/logo.png"> -->
     <!-- <router-view/> -->
-    <nav-bar :username="username"/>
-    <side-bar/>
-    <router-view :items="items" :username="username"></router-view>
+    <nav-bar @MyLogout="resetUsername()" :username="username"/>
+    <side-bar v-if="username != 'Login'" :username="username" />
+    <router-view :menu="menu" :menuToday="menuToday" :username="username" @submitMenu="updateMenu($event)" @checkLevel="updateUsername($event)" @addItems="addMenuToday($event)"></router-view>
   </div>
 </template>
 
@@ -23,12 +23,55 @@ export default {
 
   data() {
     return {
-      username: "Shopping",
-      items: [
-                {name: 'Iphone', quantity: 2, price: 1000},
-                {name: 'Apple', quantity: 10, price: 50},
-                {name: 'Coca Cola', quantity: 5, price: 15},
-              ],
+      username: "Login",
+      menuList: [
+                {name: 'Apple', price: 1000},
+                {name: 'Chicken', price: 10},
+                {name: 'Orange', price: 130},
+                {name: 'Coca Cola', price: 120},
+                {name: 'Cake', price: 400},
+                {name: 'Eggs', price: 50},
+            ],
+      menuToday: [],
+      menu: [],
+
+    }
+  },
+
+  methods: {
+    updateUsername(_username) {
+      this.username = _username;
+      if (this.username == 'admin') {
+        this.menu = new Object(this.menuList);
+      }
+      else  {
+        for (var item in this.menuToday) {
+          this.menuToday[item].quantity = 0;
+        }
+        this.menu = new Object(this.menuToday);
+      }
+    },
+
+    addMenuToday(_items) {
+      this.menuToday.push(_items);
+      console.log(this.menuToday);
+    },
+
+    resetUsername() {
+      this.username = 'Login';
+    },
+
+    updateMenu(items) {
+      for (let item in items) {
+        var obj = new Object(items[item]);
+        for (let menuItem in this.menuToday) 
+          if (this.menuToday[menuItem].name == obj.name) {
+            this.menuToday[menuItem].quantity += parseInt(obj.quantity);  
+            break;
+          }
+
+      }
+      console.log(this.menuToday);
     }
   }
 }
@@ -43,6 +86,5 @@ export default {
   color: #2c3e50;
   /* margin-top: 60px; */
 }
-
 
 </style>
