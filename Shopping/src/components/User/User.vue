@@ -2,7 +2,7 @@
     <div class='main'>
       <shopping-nav :items="items"/>
       <shopping-add-new :items="items" :menu="menu"/>
-      <shopping-list :items="items"/>
+      <shopping-list :items="items" :username="username"/>
       <button class="btn btn-success btn-user" @click="submitMenu()">Submit</button>
     </div>
 </template>
@@ -13,7 +13,7 @@ import ShoppingAddNew from './ShoppingAddNew.vue'
 import ShoppingList from './ShoppingList.vue'
 
 export default {
-    props: ["menu"],
+    props: ["menu", "username"],
     data() {
         return {
              items: [

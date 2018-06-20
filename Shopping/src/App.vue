@@ -25,12 +25,12 @@ export default {
     return {
       username: "Login",
       menuList: [
-                {name: 'Apple', price: 1000},
-                {name: 'Chicken', price: 10},
-                {name: 'Orange', price: 130},
-                {name: 'Coca Cola', price: 120},
-                {name: 'Cake', price: 400},
-                {name: 'Eggs', price: 50},
+                {name: 'Apple', price: 1000, quantity: 0, status: false},
+                {name: 'Chicken', price: 10, quantity: 0, status: false},
+                {name: 'Orange', price: 130, quantity: 0, status: false},
+                {name: 'Coca Cola', price: 120, quantity: 0, status: false},
+                {name: 'Cake', price: 400, quantity: 0, status: false},
+                {name: 'Eggs', price: 50, quantity: 0, status: false},
             ],
       menuToday: [],
       menu: [],
@@ -45,15 +45,13 @@ export default {
         this.menu = new Object(this.menuList);
       }
       else  {
-        for (var item in this.menuToday) {
-          this.menuToday[item].quantity = 0;
-        }
         this.menu = new Object(this.menuToday);
       }
     },
 
-    addMenuToday(_items) {
-      this.menuToday.push(_items);
+    addMenuToday(index) {
+      this.menuList[index].status = !this.menuList[index].status
+      this.menuToday.push(this.menuList[index]);
       console.log(this.menuToday);
     },
 
@@ -69,7 +67,6 @@ export default {
             this.menuToday[menuItem].quantity += parseInt(obj.quantity);  
             break;
           }
-
       }
       console.log(this.menuToday);
     }

@@ -16,7 +16,7 @@
                         <tr v-for="(item,key) in menu">
                             <td>{{item.name}}</td>
                             <td>${{item.price}}</td>
-                            <td v-if="username == 'admin'"><button class="btn btn-info menu-btn" :id="key" @click="addItems(key)">Add</button></td>
+                            <td v-if="username == 'admin'"><button :class="{'btn-info': !item.status, 'btn-danger': item.status}" class="btn menu-btn" :id="key" @click="addItems(key)">Add</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -32,10 +32,7 @@
         props: ["menu", "username"],
         methods: {
             addItems(index) {
-                document.getElementById(index).classList.add("btn-danger");
-                document.getElementById(index).classList.remove("btn-info");
-                this.$emit("addItems", this.menu[index]);
-                // console.log(this.menu[index]);
+                this.$emit("addItems", index);
             }
         }
     }

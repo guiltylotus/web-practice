@@ -1,52 +1,33 @@
 <template>
+    
     <div class="list-cover">
-        <div class='row list-border rounded' v-for="(item,key) in menuToday">
-            <div class="col-md-1  list-middle">
-                <span>O</span>
-            </div>
-
-            <div class="col-md-2">
-                <h3>{{item.name}}</h3>
-                <p><i>Quantity: {{item.quantity}}</i></p>
-            </div>
-
-            <div class="col-md-6 list-middle">
-                <h6>${{item.price}} </h6>
-            </div>
-
-            <div class="col-md-3 list-middle">
-                <h6>${{item.price * item.quantity}}</h6>
-            </div>
-        </div>
+        <shopping-nav :items='menuToday'/>
+        <shopping-list :items="menuToday" :username="username"/>
     </div>
 </template>
 
 <script>
+import ShoppingNav from '../User/ShoppingNav.vue'
+import ShoppingList from '../User/ShoppingList.vue'
 
 export default {
-    props: ["menu", "menuToday"],
+    props: ["menu", "menuToday", "username"],
     data() {
         return {
             
         }
+    },
+    components: {
+        "shopping-nav" : ShoppingNav,
+        "shopping-list": ShoppingList,
     }
 }   
 </script>
 
 <style scoped>
-    .list-border {
-        border: 2px solid gray;
-        height: 100px;
-        margin: 5px;
-        padding: 10px;
+    .list-cover {
+        margin-top: 40px;
         margin-left: 160px;
     }
 
-    .list-cover {
-        margin: 40px;
-    }
-
-    .list-middle {
-        margin:auto;
-    }
 </style>

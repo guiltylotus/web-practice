@@ -2,7 +2,8 @@
     <div class="list-cover">
         <div class='row list-border rounded' v-for="(item,key) in items">
             <div class="col-md-1  list-middle">
-                <button class="btn btn-danger" @click="deleteItems(key)">Delete</button>
+                <button v-if="username != 'admin'" class="btn btn-danger" @click="deleteItems(key)">Delete</button>
+                <span v-if="username == 'admin'">O</span>
             </div>
 
             <div class="col-md-2">
@@ -23,7 +24,7 @@
 
 <script>
     export default {
-        props: ['items'],
+        props: ['items', 'username'],
         data() {
             return {
                 

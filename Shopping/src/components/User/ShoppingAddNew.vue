@@ -5,21 +5,18 @@
                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Menu
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu text-center">
-                    <li v-for="item in menu">{{item.name}}</li>
+                    <li v-for="(item,key) in menu" @click="pickItem(key)" data-toggle="tooltip" data-placement="left" title="Pick Me">{{item.name}}</li>
                 </ul>
             </div>
-            <input type="text" placeholder="New item need to shop" v-model="nitem" >
+            <input type="text" placeholder="New item need to shop" :value="nitem">
 
             <div class="row">
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <input type="text" placeholder="Price" v-model="nprice">
-                </div>
-                <div class="col-md-6">
+                </div> -->
+                <div class="col-md-12">
                     <input type="text" placeholder="Quantity" v-model="nquantity">
                 </div>
-                <!-- <div class="col-md-4">
-                    <input type="text" placeholder="Unit" v-model="nunit">
-                </div> -->
             </div>
         </div>
 
@@ -46,6 +43,11 @@
                 var nlist = {name: this.nitem, quantity: this.nquantity, price: this.nprice};
                 this.items.push(nlist);
             },
+
+            pickItem(index) {
+                this.nitem = this.menu[index].name;
+                this.nprice = this.menu[index].price;
+            }
         }
     }
 </script>
@@ -83,5 +85,4 @@
         width: 100px;
         margin: 20px auto;
     }
-
 </style>

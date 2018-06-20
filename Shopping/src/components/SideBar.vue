@@ -1,8 +1,8 @@
 <template>
     <div class="side">
         <ul>
-            <li @click="toHome">Home</li>
-            <li @click="getMenu">Menu</li>
+            <li @click="toHome" @mouseover="mouseOverHome= true" @mouseout="mouseOverHome=false" :class="{toGray: mouseOverHome}">Home</li>
+            <li @click="getMenu" @mouseover="mouseOverMenu= true" @mouseout="mouseOverMenu=false" :class="{toGray: mouseOverMenu}">Menu</li>
         </ul>
     </div>
 </template>
@@ -10,6 +10,12 @@
 <script>
     export default {
         props: ["username"],
+        data() {
+            return {
+                mouseOverHome: false,
+                mouseOverMenu: false,
+            }
+        },
         methods: {
             getMenu() {
                 // this.$router.push({path: "/Menu", params:{menu: this.menu}, props: true} );
@@ -42,6 +48,16 @@
     text-decoration: none;
     display: block;
     padding: 5px;
+}
+
+li {
+    margin-top: 20px;
+}
+
+.toGray {
+    background-color: gray;
+    height: 50px;
+    color: white;
 }
 </style>
 
