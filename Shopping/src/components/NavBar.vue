@@ -8,30 +8,29 @@
 </template>
 
 <script>
-    export default {
-        props: ["username"],
-        methods: {
-            MyLogout() {
-                this.$router.push("/");
-                this.$emit('MyLogout');
-            }
-        }
+export default {
+  props: ['username'],
+  methods: {
+    MyLogout () {
+      this.$router.push('/')
+      this.$emit('MyLogout')
     }
+  }
+}
 </script>
 
 <style scoped>
 .nav {
-        font-size: 20px;
-        border: 1px solid gray;
-        color: #818181;
-        height: 50px;
-        line-height: 50px;
-        margin: 0px;
-        background-color: #111;
-    }
+  font-size: 20px;
+  border: 1px solid gray;
+  color: #818181;
+  height: 50px;
+  line-height: 50px;
+  margin: 0px;
+  background-color: #111;
+}
 
 span {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 </style>
-

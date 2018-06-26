@@ -5,7 +5,7 @@
                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Menu
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu text-center">
-                    <li v-for="(item,key) in menu" @click="pickItem(key)" data-toggle="tooltip" data-placement="left" title="Pick Me">{{item.name}}</li>
+                    <li v-for="(item,key) in menu" :key="key" @click="pickItem(key)" data-toggle="tooltip" data-placement="left" title="Pick Me">{{item.name}}</li>
                 </ul>
             </div>
             <input type="text" placeholder="New item need to shop" :value="nitem">
@@ -27,62 +27,66 @@
 </template>
 
 <script>
-    export default{
-        props: ['items', 'menu'],
-        data() {
-            return {
-                nitem: null,
-                nprice: null,
-                nquantity: null,
-                // nunit: null,
-            }
-        },
-
-        methods: {
-            addItems() {
-                var nlist = {name: this.nitem, quantity: this.nquantity, price: this.nprice};
-                this.items.push(nlist);
-            },
-
-            pickItem(index) {
-                this.nitem = this.menu[index].name;
-                this.nprice = this.menu[index].price;
-            }
-        }
+export default {
+  props: ['items', 'menu'],
+  data () {
+    return {
+      nitem: null,
+      nprice: null,
+      nquantity: null
+      // nunit: null,
     }
+  },
+
+  methods: {
+    addItems () {
+      var nlist = {
+        name: this.nitem,
+        quantity: this.nquantity,
+        price: this.nprice
+      }
+      this.items.push(nlist)
+    },
+
+    pickItem (index) {
+      this.nitem = this.menu[index].name
+      this.nprice = this.menu[index].price
+    }
+  }
+}
 </script>
 
 <style scoped>
-    .dropdown-toggle {
-        width: 100%;
-    }
+.dropdown-toggle {
+  width: 100%;
+}
 
-    .dropdown-menu {
-        width: 100%;
-    }
+.dropdown-menu {
+  width: 100%;
+}
 
-    .add-border {
-        border: 2px solid gray;
-        margin: 40px;
-        height: 200px;
-    }
+.add-border {
+  border: 2px solid gray;
+  margin: 40px;
+  height: 200px;
+}
 
-    input {
-        width: 100%;
-        margin-top: 20px;
-    }
+input {
+  width: 100%;
+  margin-top: 20px;
+}
 
-    .add-input {
-        margin: auto;
-    }
+.add-input {
+  margin: auto;
+}
 
-    .add-btn {
-        margin: auto;
-    }
+.add-btn {
+  margin: auto;
+}
 
-    button {
-        display: block;
-        width: 100px;
-        margin: 20px auto;
-    }
+button {
+  display: block;
+  width: 100px;
+  margin: 20px auto;
+}
 </style>

@@ -3,8 +3,14 @@
     <!-- <img src="./assets/logo.png"> -->
     <!-- <router-view/> -->
     <nav-bar @MyLogout="resetUsername()" :username="username"/>
-    <side-bar v-if="username != 'Login'" :username="username" />
-    <router-view :menu="menu" :menuToday="menuToday" :username="username" @submitMenu="updateMenu($event)" @checkLevel="updateUsername($event)" @addItems="addMenuToday($event)"></router-view>
+    <div class="row">
+      <div class="col-md-2">
+        <side-bar  v-if="username != 'Login'" :username="username" />
+      </div>
+      <div class="col-md-10">
+        <router-view  :menu="menu" :menuToday="menuToday" :username="username" @submitMenu="updateMenu($event)" @checkLevel="updateUsername($event)" @addItems="addMenuToday($event)"></router-view>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -18,57 +24,56 @@ export default {
   components: {
     'nav-bar': NavBar,
     'side-bar': SideBar,
-    'login': Login,
+    'login': Login
   },
 
-  data() {
+  data () {
     return {
-      username: "Login",
+      username: 'Login',
       menuList: [
-                {name: 'Apple', price: 1000, quantity: 0, status: false},
-                {name: 'Chicken', price: 10, quantity: 0, status: false},
-                {name: 'Orange', price: 130, quantity: 0, status: false},
-                {name: 'Coca Cola', price: 120, quantity: 0, status: false},
-                {name: 'Cake', price: 400, quantity: 0, status: false},
-                {name: 'Eggs', price: 50, quantity: 0, status: false},
-            ],
+        {name: 'Apple', price: 1000, quantity: 0, status: false},
+        {name: 'Chicken', price: 10, quantity: 0, status: false},
+        {name: 'Orange', price: 130, quantity: 0, status: false},
+        {name: 'Coca Cola', price: 120, quantity: 0, status: false},
+        {name: 'Cake', price: 400, quantity: 0, status: false},
+        {name: 'Eggs', price: 50, quantity: 0, status: false}
+      ],
       menuToday: [],
-      menu: [],
+      menu: []
 
     }
   },
 
   methods: {
-    updateUsername(_username) {
-      this.username = _username;
-      if (this.username == 'admin') {
-        this.menu = new Object(this.menuList);
-      }
-      else  {
-        this.menu = new Object(this.menuToday);
+    updateUsername (_username) {
+      this.username = _username
+      if (this.username === 'admin') {
+        this.menu = JSON.parse(JSON.stringify(this.menuList))
+      } else {
+        this.menu = JSON.parse(JSON.stringify(this.menuToday))
       }
     },
 
-    addMenuToday(index) {
+    addMenuToday (index) {
       this.menuList[index].status = !this.menuList[index].status
-      this.menuToday.push(this.menuList[index]);
-      console.log(this.menuToday);
+      this.menuToday.push(this.menuList[index])
+      console.log(this.menuToday)
     },
 
-    resetUsername() {
-      this.username = 'Login';
+    resetUsername () {
+      this.username = 'Login'
     },
 
-    updateMenu(items) {
+    updateMenu (items) {
       for (let item in items) {
-        var obj = new Object(items[item]);
-        for (let menuItem in this.menuToday) 
-          if (this.menuToday[menuItem].name == obj.name) {
-            this.menuToday[menuItem].quantity += parseInt(obj.quantity);  
-            break;
+        for (let menuItem in this.menuToday) {
+          if (this.menuToday[menuItem].name === items[item].name) {
+            this.menuToday[menuItem].quantity += parseInt(items[item].quantity)
+            break
           }
+        }
       }
-      console.log(this.menuToday);
+      console.log(this.menuToday)
     }
   }
 }

@@ -13,7 +13,7 @@
                         <th v-if="username== 'admin'"><b>Hôm nay ăn gì</b></th>
                     </thead>
                     <tbody>
-                        <tr v-for="(item,key) in menu">
+                        <tr v-for="(item,key) in menu" :key="key">
                             <td>{{item.name}}</td>
                             <td>${{item.price}}</td>
                             <td v-if="username == 'admin'"><button :class="{'btn-info': !item.status, 'btn-danger': item.status}" class="btn menu-btn" :id="key" @click="addItems(key)">Add</button></td>
@@ -23,50 +23,47 @@
             </div>
         </div>
     </div>
-    
-   
 </template>
 
 <script>
-    export default {
-        props: ["menu", "username"],
-        methods: {
-            addItems(index) {
-                this.$emit("addItems", index);
-            }
-        }
+export default {
+  props: ['menu', 'username'],
+  methods: {
+    addItems (index) {
+      this.$emit('addItems', index)
     }
+  }
+}
 </script>
 
 <style scoped>
 .main {
-    margin-left: 160px;
+  /* margin-left: 160px; */
 }
 
-
 th {
-    color: red;
-    height: 50px;
+  color: red;
+  height: 50px;
 }
 
 td {
-    width: 400px;
+  width: 400px;
 }
 
 tr {
-    border: 3px solid bisque;
-    height: 100px;
+  border: 3px solid bisque;
+  height: 100px;
 }
 
 .contain {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .menu-btn {
-    width: 100px;
+  width: 100px;
 }
 
 .contain-table {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 </style>

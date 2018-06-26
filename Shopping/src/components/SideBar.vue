@@ -8,56 +8,56 @@
 </template>
 
 <script>
-    export default {
-        props: ["username"],
-        data() {
-            return {
-                mouseOverHome: false,
-                mouseOverMenu: false,
-            }
-        },
-        methods: {
-            getMenu() {
-                // this.$router.push({path: "/Menu", params:{menu: this.menu}, props: true} );
-                this.$router.push("/Menu");
-            },
-
-            toHome() {
-                console.log(this.username);
-                if (this.username == "admin") 
-                    this.$router.push("/Admin")
-                else this.$router.push("/User");
-            }
-        }
+export default {
+  props: ['username'],
+  data () {
+    return {
+      mouseOverHome: false,
+      mouseOverMenu: false
     }
+  },
+  methods: {
+    getMenu () {
+      // this.$router.push({path: '/Menu', params:{menu: this.menu}, props: true} );
+      this.$router.push('/Menu')
+    },
+
+    toHome () {
+      console.log(this.username)
+      if (this.username === 'admin') this.$router.push('/Admin')
+      else this.$router.push('/User')
+    }
+  }
+}
 </script>
 
 <style scoped>
 .side {
-    border: 1px solid gray;
-    color: #818181;
-    width: 150px;
-    height: 100%;
-    position: fixed;
-    z-index: 1;
-    background-color: #111;
+  border: 1px solid gray;
+  color: #818181;
+  /* max-width: 150px;
+    width: 20%;
+    min-width: 100px; */
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  background-color: #111;
 }
 
 .side ul {
-    font-size: 25px;
-    text-decoration: none;
-    display: block;
-    padding: 5px;
+  font-size: 25px;
+  text-decoration: none;
+  display: block;
+  padding: 5px;
 }
 
 li {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .toGray {
-    background-color: gray;
-    height: 50px;
-    color: white;
+  background-color: gray;
+  height: 50px;
+  color: white;
 }
 </style>
-

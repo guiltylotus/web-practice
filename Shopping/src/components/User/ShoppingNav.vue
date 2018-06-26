@@ -16,33 +16,30 @@
 </template>
 
 <script>
-    export default{
-        props: ['items'],
-        data() {
-            return {
-               
-            }
-        },
+export default {
+  props: ['items'],
+  data () {
+    return {}
+  },
 
-        methods: {
-            totalCost() {
-                var _totalCost = 0;
-                for (let cost in this.items)
-                    _totalCost += this.items[cost].price * this.items[cost].quantity;
-                return _totalCost;
-            }
-        }
+  methods: {
+    totalCost () {
+      var _totalCost = 0
+      for (let cost in this.items) {
+        _totalCost += this.items[cost].price * this.items[cost].quantity
+      }
+      return _totalCost
     }
+  }
+}
 </script>
 
 <style scoped>
-    .nav {
-        background-color: gray;
-        height: 50px;
-        line-height: 50px;
-        color: white;
-        margin: 40px;
-    }
-
-
+.nav {
+  background-color: gray;
+  height: 50px;
+  line-height: 50px;
+  color: white;
+  margin: 40px;
+}
 </style>

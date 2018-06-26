@@ -1,6 +1,6 @@
 <template>
     <div class="list-cover">
-        <div class='row list-border rounded' v-for="(item,key) in items">
+        <div class='row list-border rounded' v-for="(item, key) in items" :key="key">
             <div class="col-md-1  list-middle">
                 <button v-if="username != 'admin'" class="btn btn-danger" @click="deleteItems(key)">Delete</button>
                 <span v-if="username == 'admin'">O</span>
@@ -23,37 +23,31 @@
 </template>
 
 <script>
-    export default {
-        props: ['items', 'username'],
-        data() {
-            return {
-                
-            }
-        },
+export default {
+  props: ['items', 'username'],
 
-        methods: {
-            deleteItems(key) {
-                console.log(this.items[1]);
-                this.items.splice(key,1);
-            }
-        }
+  methods: {
+    deleteItems (key) {
+      console.log(this.items[1])
+      this.items.splice(key, 1)
     }
+  }
+}
 </script>
 
 <style scoped>
-    .list-border {
-        border: 2px solid gray;
-        height: 100px;
-        margin: 5px;
-        padding: 10px;
-    }
+.list-border {
+  border: 2px solid gray;
+  height: 100px;
+  margin: 5px;
+  padding: 10px;
+}
 
-    .list-cover {
-        margin: 40px;
-    }
+.list-cover {
+  margin: 40px;
+}
 
-    .list-middle {
-        margin:auto;
-    }
-
+.list-middle {
+  margin: auto;
+}
 </style>
