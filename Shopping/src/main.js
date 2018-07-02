@@ -3,15 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import 'bootstrap/dist/css/bootstrap.css'
-import jQuery from 'jquery'
-// import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-global.jQuery = jQuery
-// let Bootstrap = require('bootstrap')
+import BootstrapVue from 'bootstrap-vue'
+import store from './store'
 
-Vue.config.productionTip = false
-// import '../node_modules/bulma/css/bulma.min.css'
-// import '../node_modules/font-awesome/css/font-awesome.min.css'
+Vue.use(BootstrapVue)
+require('bootstrap')
 
 Vue.config.productionTip = false
 
@@ -19,6 +15,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
